@@ -78,7 +78,7 @@
       };
 
       const addNewRow = (id, name) => {
-        const table = document.getElementById("#secretFiendTable");
+        const table = document.getElementById("secretFiendTable");
         const tbody = table.getElementsByTagName("tbody")[0];
         const newTr = document.createElement("tr");
         const newTdId = document.createElement("td");
@@ -90,12 +90,24 @@
         tbody.appendChild(newTr);
       };
 
+      const deleteAllTableRows = () => {
+        const table = document.getElementById("secretFriendTable");
+        const tbody = table.getElementsByTagName("tbody")[0];
+        tbody.innerHTML = "";
+      };
+
+      const deleteAllFriends = () => {
+        friends = [];
+        deleteAllTableRows();
+      };
+
       const addNewFriend = () => {
         const inputField = document.getElementById("inputField");
         const name = inputField.value;
         const id = friends.length + 1;
         addFriend(id, name);
         addNewRow(id, name);
+        alert(name + " added!");
       };
 
       const shuffle = () => {
@@ -130,6 +142,7 @@
         btnShuffle.addEventListener("click", shuffle);
 
         const btnDelete = document.getElementById("btnDelete");
+        btnDelete.addEventListener("click", deleteAllFriends);
       });
     </script>
   </body>
