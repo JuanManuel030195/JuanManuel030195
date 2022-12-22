@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Secret friend v1.0</title>
+    <title>Secret friend</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <title>Secret Friend</title>
+    <title>Secret Friend V1.0</title>
   </head>
   <body>
     <div class="container mt-5">
@@ -138,9 +138,7 @@
             randomIndexAlreadyAssigned =
               friendsIdsAlreadyAssigned.includes(randomIndex);
 
-            mutualSecretFriends =
-              friend.id === getSecretFriendID(randomIndex) &&
-              getSecretFriendID(randomIndex) !== null;
+            mutualSecretFriends = friend.id === getSecretFriendID(randomIndex);
 
             if (!randomIndexAlreadyAssigned) {
               friend.secretFriend = randomIndex;
