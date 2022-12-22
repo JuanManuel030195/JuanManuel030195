@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V1.3</h1>
+      <h1>Secret friend V2.0</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -77,6 +77,7 @@
 
       const addFriend = (id, name) => {
         friends.push({ id, name, secretFriend: null });
+        localStorage.setItem("friends", JSON.stringify(friends));
       };
 
       const getSecretFriendID = (id) => {
@@ -186,6 +187,11 @@
 
       // On document ready
       document.addEventListener("DOMContentLoaded", () => {
+        // Get friends from local storage
+        const friendsFromLocalStorage = JSON.parse(
+          localStorage.getItem("friends")
+        );
+
         const btnSubmit = document.getElementById("btnSubmit");
         btnSubmit.addEventListener("click", addNewFriend);
 
