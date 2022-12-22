@@ -174,8 +174,6 @@
 
         const friend = friends.find((friend) => friend.name === name);
 
-        console.log(friend);
-
         if (!friend) {
           alert("Friend not found!");
           return;
@@ -187,7 +185,7 @@
         }
 
         const secretFriend = friends.find(
-          (friend) => friend.id === friend.secretFriend
+          (sf) => sf.id === friend.secretFriend
         );
 
         if (!secretFriend) {
