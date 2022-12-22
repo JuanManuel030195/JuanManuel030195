@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.1.6</h1>
+      <h1>Secret friend V2.1.7</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -178,23 +178,16 @@
 
             if (
               !randomIndexAlreadyAssigned &&
-              !selfGifted &&
-              !mutualSecretFriends
+              !selfGifted
+              // !mutualSecretFriends
             ) {
               friend.secretFriend = randomIndex;
               randomIndexAlreadyAssigned = false;
             }
-
-            const missingFriends = missingFriendsToShuffle();
-            iterations++;
-
-            if (iterations > maxIterations && missingFriends > 0) {
-              shuffle();
-            }
           } while (
-            randomIndexAlreadyAssigned ||
-            mutualSecretFriends ||
+            randomIndexAlreadyAssigned &&
             selfGifted
+            // mutualSecretFriends ||
           );
         });
 
