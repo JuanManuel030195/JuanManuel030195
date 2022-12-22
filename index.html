@@ -147,7 +147,7 @@
             randomIndexAlreadyAssigned =
               friendsIdsAlreadyAssigned.includes(randomIndex);
 
-            mutualSecretFriends = friend.id === getSecretFriendID(randomIndex);
+            // mutualSecretFriends = friend.id === getSecretFriendID(randomIndex);
 
             selfGifted = friend.id === randomIndex;
 
@@ -157,7 +157,7 @@
             }
           } while (
             randomIndexAlreadyAssigned ||
-            mutualSecretFriends ||
+            // mutualSecretFriends ||
             selfGifted
           );
         });
@@ -192,7 +192,9 @@
           alert("Secret friend not found!");
         }
 
-        alert(secretFriend.name);
+        alert(`Secret friend of ${name} is ${secretFriend.name}!`);
+
+        inputField.value = "";
       };
 
       // On document ready
