@@ -126,9 +126,18 @@
         alert(name + " added!");
       };
 
+      const clearAllSecretFriends = () => {
+        friends.forEach((friend) => {
+          friend.secretFriend = null;
+        });
+        document.cookie = JSON.stringify(friends);
+      };
+
       const shuffle = () => {
         let min = 0;
         let max = friends.length;
+
+        clearAllSecretFriends();
 
         friends.forEach((friend) => {
           let randomIndex;
