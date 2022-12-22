@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.0.2</h1>
+      <h1>Secret friend V2.0.3</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -38,7 +38,7 @@
       <table class="table table-striped" id="secretFiendTable">
         <thead>
           <tr>
-            <th scope="col">ID</th>
+            <th scope="col">#</th>
             <th scope="col">Name</th>
           </tr>
         </thead>
@@ -77,7 +77,7 @@
 
       const addFriend = (id, name) => {
         friends.push({ id, name, secretFriend: null });
-        localStorage.setItem("friends", JSON.stringify(friends));
+        document.cookie = JSON.stringify(friends);
       };
 
       const getSecretFriendID = (id) => {
@@ -91,7 +91,7 @@
         const newTr = document.createElement("tr");
         const newTdId = document.createElement("td");
         const newTdName = document.createElement("td");
-        newTdId.innerHTML = id;
+        newTdId.innerHTML = id + 1;
         newTdName.innerHTML = name;
         newTr.appendChild(newTdId);
         newTr.appendChild(newTdName);
@@ -107,6 +107,7 @@
       const deleteAllFriends = () => {
         friends = [];
         deleteAllTableRows();
+        document.cookie = JSON.stringify(friends);
         alert("All friends deleted!");
       };
 
@@ -163,6 +164,8 @@
         const inputField = document.getElementById("inputField");
         const name = inputField.value;
 
+        console.log("Looking for secret friend of: " + name);
+
         const friend = friends.reduce((found, current) => {
           if (current.name === name) {
             return current;
@@ -197,10 +200,14 @@
 
       // On document ready
       document.addEventListener("DOMContentLoaded", () => {
-        // Get friends from local storage
-        const friendsFromLocalStorage = JSON.parse(
-          localStorage.getItem("friends")
-        );
+        // Get friends from cookie
+        const cookie = document.cookie;
+        if (cookie) {
+          friends = JSON.parse(cookie);
+          friends.forEach((friend) => {
+            addNewRow(friend.id, friend.name);
+          });
+        }
 
         const btnSubmit = document.getElementById("btnSubmit");
         btnSubmit.addEventListener("click", addNewFriend);
