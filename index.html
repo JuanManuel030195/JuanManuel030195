@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.1.1</h1>
+      <h1>Secret friend V2.1.2</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -141,28 +141,41 @@
             .filter((friend) => friend.secretFriend !== null)
             .map((friend) => friend.secretFriend);
 
-          console.log("Friend: ", friend.name);
           do {
             randomIndex = Math.floor(Math.random() * (max - min)) + min;
 
             randomIndexAlreadyAssigned =
               friendsIdsAlreadyAssigned.includes(randomIndex);
 
-            mutualSecretFriends = friend.id === getSecretFriendID(randomIndex);
+            const secretFriendId = getSecretFriendID(randomIndex);
+            mutualSecretFriends = friend.id === secretFriendId;
 
-            // selfGifted = friend.id === randomIndex;
+            selfGifted = friend.id === randomIndex;
+
+            console.log("------------------");
+            console.log("randomIndex", randomIndex);
+            console.log("friend.id", friend.id);
+            console.log("secretFriendId", secretFriendId);
+            console.log("-------");
+            console.log(
+              "randomIndexAlreadyAssigned",
+              randomIndexAlreadyAssigned
+            );
+            console.log("mutualSecretFriends", mutualSecretFriends);
+            console.log("selfGifted", selfGifted);
+            console.log("------------------");
 
             if (
-              !randomIndexAlreadyAssigned &&
+              !randomIndexAlreadyAssigned
               // !selfGifted &&
-              !mutualSecretFriends
+              // !mutualSecretFriends
             ) {
               friend.secretFriend = randomIndex;
               randomIndexAlreadyAssigned = false;
             }
           } while (
-            randomIndexAlreadyAssigned ||
-            mutualSecretFriends
+            randomIndexAlreadyAssigned
+            // mutualSecretFriends
             // selfGifted
           );
         });
