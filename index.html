@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.0.4</h1>
+      <h1>Secret friend V2.0.5</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -162,6 +162,9 @@
           );
         });
 
+        // Save the new friends array to the cookie
+        document.cookie = JSON.stringify(friends);
+
         alert("Shuffled!");
       };
 
@@ -169,17 +172,9 @@
         const inputField = document.getElementById("inputField");
         const name = inputField.value;
 
-        console.log("Looking for secret friend of: " + name);
+        const friend = friends.find((friend) => friend.name === name);
 
-        let friend = null;
-
-        friends.forEach((f) => {
-          if (f.name == name) {
-            friend = f;
-          }
-        });
-
-        console.log("friend found: " + friend);
+        console.log(friend);
 
         if (!friend) {
           alert("Friend not found!");
@@ -194,8 +189,6 @@
         const secretFriend = friends.find(
           (friend) => friend.id === friend.secretFriend
         );
-
-        console.log("secret friend found: " + secretFriend);
 
         if (!secretFriend) {
           alert("Secret friend not found!");
