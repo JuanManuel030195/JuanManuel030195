@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.0.3</h1>
+      <h1>Secret friend V2.0.4</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -81,8 +81,13 @@
       };
 
       const getSecretFriendID = (id) => {
-        const friend = friends.find((friend) => friend.id === id);
-        return friend.secretFriend;
+        let secretFriendID = null;
+        friends.forEach((friend) => {
+          if (friend.id === id) {
+            secretFriendID = friend.secretFriend;
+          }
+        });
+        return secretFriendID;
       };
 
       const addNewRow = (id, name) => {
@@ -166,12 +171,13 @@
 
         console.log("Looking for secret friend of: " + name);
 
-        const friend = friends.reduce((found, current) => {
-          if (current.name === name) {
-            return current;
+        let friend = null;
+
+        friends.forEach((f) => {
+          if (f.name == name) {
+            friend = f;
           }
-          return found;
-        }, null);
+        });
 
         console.log("friend found: " + friend);
 
