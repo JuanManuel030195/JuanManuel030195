@@ -14,10 +14,10 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>My Form</h1>
+      <h1>Secret friend/h1>
       <form>
         <div class="form-group">
-          <label for="inputField">Input</label>
+          <label for="inputField">Name</label>
           <input
             type="text"
             class="form-control"
@@ -27,6 +27,9 @@
         </div>
         <button type="button" class="btn btn-primary" id="btnSubmit">
           Submit
+        </button>
+        <button type="button" class="btn btn-primary" id="btnShowSecretFriend">
+          Show secret friend
         </button>
       </form>
     </div>
@@ -99,6 +102,7 @@
       const deleteAllFriends = () => {
         friends = [];
         deleteAllTableRows();
+        alert("All friends deleted!");
       };
 
       const addNewFriend = () => {
@@ -107,6 +111,7 @@
         const id = friends.length + 1;
         addFriend(id, name);
         addNewRow(id, name);
+        inputField.value = "";
         alert(name + " added!");
       };
 
@@ -133,6 +138,20 @@
         alert("Shuffled!");
       };
 
+      const showSecretFriend = () => {
+        const inputField = document.getElementById("inputField");
+        const name = inputField.value;
+        const friend = friends.find((friend) => friend.name === name);
+        if (friend) {
+          const secretFriend = friends.find(
+            (friend) => friend.id === friend.secretFriend
+          );
+          alert(secretFriend.name);
+        } else {
+          alert("Friend not found!");
+        }
+      };
+
       // On document ready
       document.addEventListener("DOMContentLoaded", () => {
         const btnSubmit = document.getElementById("btnSubmit");
@@ -143,6 +162,9 @@
 
         const btnDelete = document.getElementById("btnDelete");
         btnDelete.addEventListener("click", deleteAllFriends);
+
+        const btnShowSecretFriend = document.getElementById("btnShowSecretFriend");
+        btnShowSecretFriend.addEventListener("click", showSecretFriend);
       });
     </script>
   </body>
