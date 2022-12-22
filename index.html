@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.1.2</h1>
+      <h1>Secret friend V2.1.3</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -161,31 +161,31 @@
 
             selfGifted = friend.id === randomIndex;
 
-            console.log("------------------");
-            console.log("randomIndex", randomIndex);
-            console.log("friend.id", friend.id);
-            console.log("secretFriendId", secretFriendId);
-            console.log("-------");
-            console.log(
-              "randomIndexAlreadyAssigned",
-              randomIndexAlreadyAssigned
-            );
-            console.log("mutualSecretFriends", mutualSecretFriends);
-            console.log("selfGifted", selfGifted);
-            console.log("------------------");
+            // console.log("------------------");
+            // console.log("randomIndex", randomIndex);
+            // console.log("friend.id", friend.id);
+            // console.log("secretFriendId", secretFriendId);
+            // console.log("-------");
+            // console.log(
+            //   "randomIndexAlreadyAssigned",
+            //   randomIndexAlreadyAssigned
+            // );
+            // console.log("mutualSecretFriends", mutualSecretFriends);
+            // console.log("selfGifted", selfGifted);
+            // console.log("------------------");
 
             if (
-              !randomIndexAlreadyAssigned
-              // !selfGifted &&
-              // !mutualSecretFriends
+              !randomIndexAlreadyAssigned &&
+              !selfGifted &&
+              !mutualSecretFriends
             ) {
               friend.secretFriend = randomIndex;
               randomIndexAlreadyAssigned = false;
             }
           } while (
-            randomIndexAlreadyAssigned
-            // mutualSecretFriends
-            // selfGifted
+            randomIndexAlreadyAssigned ||
+            mutualSecretFriends ||
+            selfGifted
           );
         });
 
