@@ -14,7 +14,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend/h1>
+      <h1>Secret friend</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -80,6 +80,11 @@
         friends.push({ id, name, secretFriend: null });
       };
 
+      const getSecretFriendID = (id) => {
+        const friend = friends.find((friend) => friend.id === id);
+        return friend.secretFriend;
+      };
+
       const addNewRow = (id, name) => {
         const table = document.getElementById("secretFiendTable");
         const tbody = table.getElementsByTagName("tbody")[0];
@@ -119,20 +124,29 @@
         let min = 0;
         let max = friends.length - 1;
 
-        friends.forEach((friend) => {
-          do {
-            let randomIndexAlreadyAssigned = false;
-            let randomIndex = Math.floor(Math.random() * (max - min + 1)) + min;
-            friends.forEach((friend) => {
-              if (friend.secretFriend === randomIndex) {
-                randomIndexAlreadyAssigned = true;
-              }
-            });
+        const friendsIdsAlreadyAssigned = friends
+          .filter((friend) => friend.secretFriend !== null)
+          .map((friend) => friend.secretFriend);
 
-            if (!randomIndexAlreadyAssigned && friend.id !== randomIndex) {
+        friends.forEach((friend) => {
+          let randomIndex;
+          let randomIndexAlreadyAssigned = true;
+          let mutualSecretFriends = true;
+          do {
+            randomIndex = Math.floor(Math.random() * (max - min + 1)) + min;
+
+            randomIndexAlreadyAssigned =
+              friendsIdsAlreadyAssigned.includes(randomIndex);
+
+            mutualSecretFriends =
+              friend.id === getSecretFriendID(randomIndex) &&
+              getSecretFriendID(randomIndex) !== null;
+
+            if (!randomIndexAlreadyAssigned) {
               friend.secretFriend = randomIndex;
+              randomIndexAlreadyAssigned = false;
             }
-          } while (randomIndexAlreadyAssigned);
+          } while (randomIndexAlreadyAssigned && mutualSecretFriends);
         });
 
         alert("Shuffled!");
@@ -142,11 +156,11 @@
         const inputField = document.getElementById("inputField");
         const name = inputField.value;
         const friend = friends.find((friend) => friend.name === name);
-        if (friend) {
+        if (friend && friend.secretFriend !== null) {
           const secretFriend = friends.find(
             (friend) => friend.id === friend.secretFriend
           );
-          alert(secretFriend.name);
+          alert("Secret friend is: " + secretFriend.name);
         } else {
           alert("Friend not found!");
         }
@@ -163,7 +177,9 @@
         const btnDelete = document.getElementById("btnDelete");
         btnDelete.addEventListener("click", deleteAllFriends);
 
-        const btnShowSecretFriend = document.getElementById("btnShowSecretFriend");
+        const btnShowSecretFriend = document.getElementById(
+          "btnShowSecretFriend"
+        );
         btnShowSecretFriend.addEventListener("click", showSecretFriend);
       });
     </script>
