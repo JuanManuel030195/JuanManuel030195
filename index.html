@@ -10,7 +10,7 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <title>Secret Friend V1.0</title>
+    <title>Secret Friend V1.1</title>
   </head>
   <body>
     <div class="container mt-5">
@@ -154,14 +154,26 @@
         const inputField = document.getElementById("inputField");
         const name = inputField.value;
         const friend = friends.find((friend) => friend.name === name);
-        if (friend && friend.secretFriend !== null) {
-          const secretFriend = friends.find(
-            (friend) => friend.id === friend.secretFriend
-          );
-          alert("Secret friend is: " + secretFriend.name);
-        } else {
+
+        if (!friend) {
           alert("Friend not found!");
+          return;
         }
+
+        if (friend.secretFriend === null) {
+          alert("Secret friend not assigned!");
+          return;
+        }
+
+        const secretFriend = friends.find(
+          (friend) => friend.id === friend.secretFriend
+        );
+
+        if (!secretFriend) {
+          alert("Secret friend not found!");
+        }
+
+        alert(secretFriend.name);
       };
 
       // On document ready
