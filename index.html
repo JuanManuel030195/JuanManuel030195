@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.1.4</h1>
+      <h1>Secret friend V2.1.5</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -134,8 +134,15 @@
       };
 
       const shuffle = () => {
-        let min = 0;
-        let max = friends.length;
+        if (friends.length < 2) {
+          alert("You need more than 2 friends to shuffle!");
+          return;
+        }
+
+        const min = 0;
+        const max = friends.length;
+
+        const maxIterations = friends.length;
 
         clearAllSecretFriends();
 
@@ -150,6 +157,7 @@
             .filter((friend) => friend.secretFriend !== null)
             .map((friend) => friend.secretFriend);
 
+          let iterations = 0;
           do {
             randomIndex = Math.floor(Math.random() * (max - min)) + min;
 
@@ -161,31 +169,24 @@
 
             selfGifted = friend.id === randomIndex;
 
-            console.log("------------------");
-            console.log("randomIndex", randomIndex);
-            console.log("friend.id", friend.id);
-            console.log("secretFriendId", secretFriendId);
-            console.log("-------");
-            console.log(
-              "randomIndexAlreadyAssigned",
-              randomIndexAlreadyAssigned
-            );
-            console.log("mutualSecretFriends", mutualSecretFriends);
-            console.log("selfGifted", selfGifted);
-            console.log("------------------");
-
             if (
-              !randomIndexAlreadyAssigned
-              // !selfGifted &&
-              // !mutualSecretFriends
+              !randomIndexAlreadyAssigned &&
+              !selfGifted &&
+              !mutualSecretFriends
             ) {
               friend.secretFriend = randomIndex;
               randomIndexAlreadyAssigned = false;
             }
+
+            iterations++;
+
+            if (iterations > maxIterations) {
+              shuffle();
+            }
           } while (
-            randomIndexAlreadyAssigned
-            // mutualSecretFriends ||
-            // selfGifted
+            randomIndexAlreadyAssigned ||
+            mutualSecretFriends ||
+            selfGifted
           );
         });
 
