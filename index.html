@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V1.2</h1>
+      <h1>Secret friend V1.3</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -123,14 +123,17 @@
         let min = 0;
         let max = friends.length - 1;
 
-        const friendsIdsAlreadyAssigned = friends
-          .filter((friend) => friend.secretFriend !== null)
-          .map((friend) => friend.secretFriend);
-
         friends.forEach((friend) => {
           let randomIndex;
+
           let randomIndexAlreadyAssigned = true;
           let mutualSecretFriends = true;
+          let selfGifted = true;
+
+          const friendsIdsAlreadyAssigned = friends
+            .filter((friend) => friend.secretFriend !== null)
+            .map((friend) => friend.secretFriend);
+
           do {
             randomIndex = Math.floor(Math.random() * (max - min)) + min;
 
@@ -139,11 +142,17 @@
 
             mutualSecretFriends = friend.id === getSecretFriendID(randomIndex);
 
+            selfGifted = friend.id === randomIndex;
+
             if (!randomIndexAlreadyAssigned) {
               friend.secretFriend = randomIndex;
               randomIndexAlreadyAssigned = false;
             }
-          } while (randomIndexAlreadyAssigned && mutualSecretFriends);
+          } while (
+            randomIndexAlreadyAssigned ||
+            mutualSecretFriends ||
+            selfGifted
+          );
         });
 
         alert("Shuffled!");
