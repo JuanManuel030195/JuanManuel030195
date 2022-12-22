@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.0.1</h1>
+      <h1>Secret friend V2.0.2</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -163,7 +163,12 @@
         const inputField = document.getElementById("inputField");
         const name = inputField.value;
 
-        const friend = friends.find((friend) => friend.name === name);
+        const friend = friends.reduce((found, current) => {
+          if (current.name === name) {
+            return current;
+          }
+          return found;
+        }, null);
 
         console.log("friend found: " + friend);
 
