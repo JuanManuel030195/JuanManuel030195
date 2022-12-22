@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1>Secret friend V2.1.5</h1>
+      <h1>Secret friend V2.1.6</h1>
       <form>
         <div class="form-group">
           <label for="inputField">Name</label>
@@ -133,6 +133,13 @@
         document.cookie = JSON.stringify(friends);
       };
 
+      const missingFriendsToShuffle = () => {
+        const friendsWithoutSecretFriend = friends.filter(
+          (friend) => friend.secretFriend === null
+        );
+        return friendsWithoutSecretFriend.length;
+      };
+
       const shuffle = () => {
         if (friends.length < 2) {
           alert("You need more than 2 friends to shuffle!");
@@ -178,9 +185,10 @@
               randomIndexAlreadyAssigned = false;
             }
 
+            const missingFriends = missingFriendsToShuffle();
             iterations++;
 
-            if (iterations > maxIterations) {
+            if (iterations > maxIterations && missingFriends > 0) {
               shuffle();
             }
           } while (
